@@ -34,7 +34,9 @@ export function Layout({ children }: { children: ReactNode }) {
       <aside className="flex w-64 flex-col border-r border-gray-200 bg-white">
         {/* Logo */}
         <div className="flex h-16 items-center gap-3 border-b border-gray-200 px-6">
-          <img src="/logo.png" alt="OpenConduit" className="h-8 w-8 rounded-lg" />
+          <div className="h-8 w-8 overflow-hidden rounded-lg">
+            <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
+          </div>
           <span className="text-lg font-bold text-gray-900">
             OpenConduit
           </span>

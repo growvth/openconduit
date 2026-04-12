@@ -30,7 +30,9 @@ function Nav() {
     <nav className="fixed top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="/" className="flex items-center gap-2.5">
-          <img src="/logo.png" alt="OpenConduit" className="h-8 w-8 rounded-lg" />
+          <div className="h-8 w-8 overflow-hidden rounded-lg">
+            <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
+          </div>
           <span className="text-lg font-bold">OpenConduit</span>
         </a>
 
@@ -39,7 +41,7 @@ function Nav() {
           <a href="#self-hosting" className="text-sm font-medium text-gray-600 hover:text-gray-900">Self-Hosting</a>
           <a href="#docs" className="text-sm font-medium text-gray-600 hover:text-gray-900">Docs</a>
           <a
-            href="https://github.com/maskedsyntax/openconduit"
+            href="https://github.com/growvth/openconduit"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
@@ -61,7 +63,7 @@ function Nav() {
             <a href="#self-hosting" onClick={() => setOpen(false)} className="text-sm font-medium text-gray-600">Self-Hosting</a>
             <a href="#docs" onClick={() => setOpen(false)} className="text-sm font-medium text-gray-600">Docs</a>
             <a
-              href="https://github.com/maskedsyntax/openconduit"
+              href="https://github.com/growvth/openconduit"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white"
@@ -80,7 +82,7 @@ function Hero() {
   const [copied, setCopied] = useState(false);
 
   const copyCommand = () => {
-    navigator.clipboard.writeText("git clone https://github.com/maskedsyntax/openconduit.git && cd openconduit && docker compose up");
+    navigator.clipboard.writeText("git clone https://github.com/growvth/openconduit.git && cd openconduit && docker compose up");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -94,7 +96,9 @@ function Hero() {
       </div>
 
       <div className="mx-auto max-w-6xl px-6 text-center">
-        <img src="/logo.png" alt="OpenConduit" className="mx-auto mb-6 h-20 w-20 rounded-2xl shadow-lg" />
+        <div className="mx-auto mb-6 h-20 w-20 overflow-hidden rounded-2xl shadow-lg">
+          <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
+        </div>
 
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
           <span className="flex h-2 w-2 rounded-full bg-brand-500" />
@@ -121,7 +125,7 @@ function Hero() {
             <ArrowRight className="h-5 w-5" />
           </a>
           <a
-            href="https://github.com/maskedsyntax/openconduit"
+            href="https://github.com/growvth/openconduit"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3 text-base font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-all"
@@ -261,7 +265,7 @@ function SelfHosting() {
                 step: "1",
                 title: "Clone & configure",
                 description: "Clone the repository and copy .env.example to .env. Set your database password, JWT secret, and domain.",
-                code: "git clone https://github.com/maskedsyntax/openconduit.git\ncd openconduit\ncp .env.example .env",
+                code: "git clone https://github.com/growvth/openconduit.git\ncd openconduit\ncp .env.example .env",
               },
               {
                 step: "2",
@@ -371,27 +375,27 @@ function Docs() {
             {
               title: "API Reference",
               description: "Full REST API documentation with authentication, contacts, messages, and more.",
-              link: "https://github.com/maskedsyntax/openconduit",
+              link: "https://github.com/growvth/openconduit",
             },
             {
               title: "WhatsApp Provider Setup",
               description: "Step-by-step guides for configuring Meta Cloud API, 360dialog, and Twilio.",
-              link: "https://github.com/maskedsyntax/openconduit",
+              link: "https://github.com/growvth/openconduit",
             },
             {
               title: "Webhook Configuration",
               description: "How to expose your instance, register webhooks, and handle verification.",
-              link: "https://github.com/maskedsyntax/openconduit",
+              link: "https://github.com/growvth/openconduit",
             },
             {
               title: "Security Best Practices",
               description: "JWT configuration, webhook HMAC validation, rate limiting, and password policies.",
-              link: "https://github.com/maskedsyntax/openconduit",
+              link: "https://github.com/growvth/openconduit",
             },
             {
               title: "Contributing",
               description: "How to contribute to OpenConduit. Development setup, coding standards, and PR process.",
-              link: "https://github.com/maskedsyntax/openconduit",
+              link: "https://github.com/growvth/openconduit",
             },
           ].map((doc) => (
             <a
@@ -488,13 +492,15 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="OpenConduit" className="h-7 w-7 rounded-lg" />
+            <div className="h-7 w-7 overflow-hidden rounded-lg">
+              <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
+            </div>
             <span className="text-sm font-bold">OpenConduit</span>
           </div>
 
           <div className="flex items-center gap-6">
             <a
-              href="https://github.com/maskedsyntax/openconduit"
+              href="https://github.com/growvth/openconduit"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900"
