@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  AGENT
+}
+
+enum ConversationStatus {
+  OPEN
+  RESOLVED
+  PENDING
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  DOCUMENT
+  AUDIO
+  VIDEO
+  TEMPLATE
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(AGENT)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  assignedContacts      Contact[]      @relation("AssignedContacts")
+  assignedConversations Conversation[] @relation("AssignedConversations")
+  reminders             Reminder[]
+
+  @@map("users")
+}
+
+model Contact {
+  id            String    @id @default(uuid()) @db.Uuid
+  phone         String    @unique
+  name          String
+  notes         String?   @db.Text
+  waId          String?   @map("wa_id")
+  optedIn       Boolean   @default(false) @map("opted_in")
+  optedInAt     DateTime? @map("opted_in_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  assignedToId    String?        @map("assigned_to_id") @db.Uuid
+  assignedTo      User?          @relation("AssignedContacts", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  pipelineStageId String?        @map("pipeline_stage_id") @db.Uuid
+  pipelineStage   PipelineStage? @relation(fields: [pipelineStageId], references: [id], onDelete: SetNull)
+
+  tags          ContactTag[]
+  conversations Conversation[]
+  reminders     Reminder[]
+
+  @@index([phone])
+  @@index([assignedToId])
+  @@index([pipelineStageId])
+  @@map("contacts")
+}
+
+model Tag {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String @unique
+  color String @db.VarChar(7)
+
+  contacts ContactTag[]
+
+  @@map("tags")
+}
+
+model ContactTag {
+  contactId String @map("contact_id") @db.Uuid
+  tagId     String @map("tag_id") @db.Uuid
+
+  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([contactId, tagId])
+  @@map("contact_tags")
+}
+
+model PipelineStage {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String
+  order Int
+  color String @db.VarChar(7)
+
+  contacts Contact[]
+
+  @@map("pipeline_stages")
+}
+
+model Conversation {
+  id        String             @id @default(uuid()) @db.Uuid
+  status    ConversationStatus @default(OPEN)
+  createdAt DateTime           @default(now()) @map("created_at")
+  updatedAt DateTime           @updatedAt @map("updated_at")
+
+  contactId    String  @map("contact_id") @db.Uuid
+  contact      Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  assignedToId String? @map("assigned_to_id") @db.Uuid
+  assignedTo   User?   @relation("AssignedConversations", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  messages Message[]
+
+  @@index([contactId])
+  @@index([assignedToId])
+  @@index([status])
+  @@map("conversations")
+}
+
+model Message {
+  id            String           @id @default(uuid()) @db.Uuid
+  direction     MessageDirection
+  type          MessageType      @default(TEXT)
+  body          String?          @db.Text
+  mediaUrl      String?          @map("media_url")
+  mediaType     String?          @map("media_type")
+  providerMsgId String?          @map("provider_msg_id")
+  status        MessageStatus    @default(SENT)
+  sentAt        DateTime         @default(now()) @map("sent_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+
+  conversationId String       @map("conversation_id") @db.Uuid
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([providerMsgId])
+  @@map("messages")
+}
+
+model Reminder {
+  id        String   @id @default(uuid()) @db.Uuid
+  note      String   @db.Text
+  dueAt     DateTime @map("due_at")
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  contactId String  @map("contact_id") @db.Uuid
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([dueAt])
+  @@map("reminders")
+}
+
+model MessageTemplate {
+  id                 String   @id @default(uuid()) @db.Uuid
+  name               String
+  body               String   @db.Text
+  providerTemplateId String?  @map("provider_template_id")
+  isApproved         Boolean  @default(false) @map("is_approved")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  @@map("message_templates")
+}
+
+model AutoTagRule {
+  id      String @id @default(uuid()) @db.Uuid
+  keyword String
+  tagId   String @map("tag_id") @db.Uuid
+
+  @@map("auto_tag_rules")
+}
+
+model Settings {
+  id                     String  @id @default(uuid()) @db.Uuid
+  whatsappProvider       String? @map("whatsapp_provider")
+  whatsappApiKey         String? @map("whatsapp_api_key")
+  whatsappPhoneNumberId  String? @map("whatsapp_phone_number_id")
+  whatsappWebhookSecret  String? @map("whatsapp_webhook_secret")
+  autoOptInOnFirstMessage Boolean @default(false) @map("auto_opt_in_on_first_message")
+
+  @@map("settings")
+}
