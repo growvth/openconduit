@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { MessageSquare } from "lucide-react";
+
 
 export function LoginPage() {
   const { user, login } = useAuth();
@@ -34,9 +34,7 @@ export function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-500">
-            <MessageSquare className="h-8 w-8 text-white" />
-          </div>
+          <img src="/logo.png" alt="OpenConduit" className="mx-auto mb-4 h-14 w-14 rounded-2xl" />
           <h1 className="text-2xl font-bold text-gray-900">OpenConduit</h1>
           <p className="mt-1 text-sm text-gray-500">
             Sign in to your account

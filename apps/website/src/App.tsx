@@ -30,9 +30,7 @@ function Nav() {
     <nav className="fixed top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a href="/" className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500">
-            <MessageSquare className="h-5 w-5 text-white" />
-          </div>
+          <img src="/logo.png" alt="OpenConduit" className="h-8 w-8 rounded-lg" />
           <span className="text-lg font-bold">OpenConduit</span>
         </a>
 
@@ -96,6 +94,8 @@ function Hero() {
       </div>
 
       <div className="mx-auto max-w-6xl px-6 text-center">
+        <img src="/logo.png" alt="OpenConduit" className="mx-auto mb-6 h-20 w-20 rounded-2xl shadow-lg" />
+
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
           <span className="flex h-2 w-2 rounded-full bg-brand-500" />
           Open Source &middot; Self-Hostable &middot; Free Forever
@@ -488,9 +488,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-500">
-              <MessageSquare className="h-4 w-4 text-white" />
-            </div>
+            <img src="/logo.png" alt="OpenConduit" className="h-7 w-7 rounded-lg" />
             <span className="text-sm font-bold">OpenConduit</span>
           </div>
 
