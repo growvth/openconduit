@@ -5,10 +5,12 @@
     "moduleResolution": "bundler",
     "lib": ["ES2022"],
     "skipLibCheck": true,
-    "noEmit": true,
+    "composite": true,
     "strict": true,
     "isolatedModules": true,
-    "allowImportingTsExtensions": true
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true,
+    "declaration": true
   },
   "include": ["vite.config.ts", "tailwind.config.ts", "postcss.config.ts"]
 }
