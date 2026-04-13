@@ -19,7 +19,6 @@ import {
   Lock,
   Database,
   Copy,
-  ExternalLink,
 } from "lucide-react";
 import clsx from "clsx";
 
@@ -28,8 +27,8 @@ function Nav() {
 
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a href="/" className="flex items-center gap-2.5">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
+        <a href="/" className="flex items-center gap-2">
           <div className="h-8 w-8 overflow-hidden rounded-lg">
             <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
           </div>
@@ -51,22 +50,22 @@ function Nav() {
           </a>
         </div>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <button onClick={() => setOpen(!open)} className="rounded-lg p-1.5 text-gray-600 hover:bg-gray-100 md:hidden">
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {open && (
-        <div className="border-t border-gray-100 bg-white px-6 py-4 md:hidden">
-          <div className="flex flex-col gap-4">
-            <a href="#features" onClick={() => setOpen(false)} className="text-sm font-medium text-gray-600">Features</a>
-            <a href="#self-hosting" onClick={() => setOpen(false)} className="text-sm font-medium text-gray-600">Self-Hosting</a>
-            <a href="#docs" onClick={() => setOpen(false)} className="text-sm font-medium text-gray-600">Docs</a>
+        <div className="border-t border-gray-100 bg-white px-4 pb-4 pt-2 md:hidden">
+          <div className="flex flex-col gap-1">
+            <a href="#features" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Features</a>
+            <a href="#self-hosting" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Self-Hosting</a>
+            <a href="#docs" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Docs</a>
             <a
               href="https://github.com/growvth/openconduit"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white"
+              className="mt-1 inline-flex items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white"
             >
               <GitBranch className="h-4 w-4" />
               GitHub
@@ -88,38 +87,38 @@ function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-32 pb-20">
+    <section className="relative overflow-hidden pt-24 pb-12 sm:pt-32 sm:pb-20">
       {/* Background gradient */}
-      <div className="absolute inset-0 -z-10">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-brand-50/50 to-white" />
-        <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[600px] w-[900px] rounded-full bg-brand-100/30 blur-3xl" />
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[400px] w-[600px] rounded-full bg-brand-100/30 blur-3xl sm:h-[600px] sm:w-[900px]" />
       </div>
 
-      <div className="mx-auto max-w-6xl px-6 text-center">
-        <div className="mx-auto mb-6 h-20 w-20 overflow-hidden rounded-2xl shadow-lg">
+      <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
+        <div className="mx-auto mb-5 h-16 w-16 overflow-hidden rounded-2xl shadow-lg sm:mb-6 sm:h-20 sm:w-20">
           <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
         </div>
 
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
-          <span className="flex h-2 w-2 rounded-full bg-brand-500" />
+        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-sm">
+          <span className="flex h-1.5 w-1.5 rounded-full bg-brand-500 sm:h-2 sm:w-2" />
           Open Source &middot; Self-Hostable &middot; Free Forever
         </div>
 
-        <h1 className="mx-auto max-w-4xl text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
           Your WhatsApp CRM,{" "}
           <span className="gradient-text">on your server</span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600 leading-relaxed">
+        <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 leading-relaxed sm:mt-6 sm:text-lg">
           OpenConduit is the open-source WhatsApp CRM built for solo operators
-          and small teams. Manage contacts, conversations, and lead pipelines
-          — all self-hosted, all yours.
+          and small teams. Manage contacts, conversations, and lead pipelines,
+          all self-hosted, all yours.
         </p>
 
-        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <div className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4">
           <a
             href="#self-hosting"
-            className="inline-flex items-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-brand-500/25 hover:bg-brand-600 transition-all hover:shadow-xl hover:shadow-brand-500/30"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30 sm:w-auto"
           >
             Get Started
             <ArrowRight className="h-5 w-5" />
@@ -128,7 +127,7 @@ function Hero() {
             href="https://github.com/growvth/openconduit"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3 text-base font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition-all"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3 text-base font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50 sm:w-auto"
           >
             <GitBranch className="h-5 w-5" />
             View on GitHub
@@ -136,19 +135,19 @@ function Hero() {
         </div>
 
         {/* Quick start command */}
-        <div className="mx-auto mt-12 max-w-xl">
+        <div className="mx-auto mt-8 max-w-xl sm:mt-12">
           <button
             onClick={copyCommand}
-            className="group flex w-full items-center gap-3 rounded-xl border border-gray-200 bg-gray-900 px-5 py-3.5 text-left shadow-lg transition-all hover:border-gray-300"
+            className="group flex w-full items-center gap-2 rounded-xl border border-gray-200 bg-gray-900 px-3 py-3 text-left shadow-lg transition-all hover:border-gray-300 sm:gap-3 sm:px-5 sm:py-3.5"
           >
-            <Terminal className="h-5 w-5 flex-shrink-0 text-brand-400" />
-            <code className="flex-1 truncate font-mono text-sm text-gray-300">
+            <Terminal className="h-4 w-4 flex-shrink-0 text-brand-400 sm:h-5 sm:w-5" />
+            <code className="flex-1 truncate font-mono text-xs text-gray-300 sm:text-sm">
               git clone ... && docker compose up
             </code>
             {copied ? (
-              <Check className="h-4 w-4 text-brand-400" />
+              <Check className="h-4 w-4 flex-shrink-0 text-brand-400" />
             ) : (
-              <Copy className="h-4 w-4 text-gray-500 group-hover:text-gray-300" />
+              <Copy className="h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-gray-300" />
             )}
           </button>
         </div>
@@ -207,33 +206,33 @@ const features = [
 
 function Features() {
   return (
-    <section id="features" className="py-24 bg-gray-50">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="features" className="py-16 bg-gray-50 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Everything you need to run your
             <br />
             <span className="gradient-text">WhatsApp business</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-gray-600">
+          <p className="mx-auto mt-3 max-w-xl text-sm text-gray-600 sm:mt-4 sm:text-base">
             A complete CRM built specifically for WhatsApp-first businesses.
             No bloat, no compromises.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:border-brand-200"
+              className="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-brand-200 sm:p-6"
             >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white sm:mb-4 sm:h-11 sm:w-11">
                 <feature.icon className="h-5 w-5" />
               </div>
-              <h3 className="mb-2 text-base font-semibold text-gray-900">
+              <h3 className="mb-1.5 text-sm font-semibold text-gray-900 sm:mb-2 sm:text-base">
                 {feature.title}
               </h3>
-              <p className="text-sm leading-relaxed text-gray-500">
+              <p className="text-xs leading-relaxed text-gray-500 sm:text-sm">
                 {feature.description}
               </p>
             </div>
@@ -246,20 +245,20 @@ function Features() {
 
 function SelfHosting() {
   return (
-    <section id="self-hosting" className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="self-hosting" className="py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Deploy in <span className="gradient-text">minutes</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-gray-600">
+          <p className="mx-auto mt-3 max-w-xl text-sm text-gray-600 sm:mt-4 sm:text-base">
             One command to spin up. Your data stays on your server. Always.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-8 sm:mt-16 lg:grid-cols-2 lg:gap-12">
           {/* Steps */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {[
               {
                 step: "1",
@@ -280,32 +279,34 @@ function SelfHosting() {
                 code: "# Visit https://yourdomain.com\n# Login as admin@openconduit.dev\n# Go to Settings > WhatsApp Provider",
               },
             ].map((item) => (
-              <div key={item.step} className="flex gap-4">
-                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-brand-500 text-sm font-bold text-white">
+              <div key={item.step} className="flex gap-3 sm:gap-4">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-500 text-xs font-bold text-white sm:h-9 sm:w-9 sm:text-sm">
                   {item.step}
                 </div>
-                <div>
-                  <h3 className="text-base font-semibold text-gray-900">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm font-semibold text-gray-900 sm:text-base">
                     {item.title}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-xs text-gray-500 sm:text-sm">
                     {item.description}
                   </p>
-                  <pre className="mt-3 overflow-x-auto rounded-lg bg-gray-900 p-3 text-sm">
-                    <code className="font-mono text-gray-300">{item.code}</code>
-                  </pre>
+                  <div className="mt-3 overflow-x-auto rounded-lg bg-gray-900 p-3">
+                    <pre className="text-xs sm:text-sm">
+                      <code className="font-mono text-gray-300 whitespace-pre">{item.code}</code>
+                    </pre>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Requirements card */}
-          <div>
-            <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-              <h3 className="mb-6 text-lg font-semibold text-gray-900">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
+              <h3 className="mb-4 text-base font-semibold text-gray-900 sm:mb-6 sm:text-lg">
                 Requirements
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {[
                   { icon: Server, text: "A Linux VPS (Ubuntu 22.04+ recommended) or any Docker-capable host" },
                   { icon: Globe, text: "A registered domain name with DNS pointed to your server" },
@@ -313,30 +314,30 @@ function SelfHosting() {
                   { icon: Database, text: "Docker and Docker Compose installed on the server" },
                 ].map((req, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500">
-                      <req.icon className="h-4 w-4" />
+                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 sm:h-8 sm:w-8">
+                      <req.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </div>
-                    <p className="text-sm text-gray-600 pt-1">{req.text}</p>
+                    <p className="text-xs text-gray-600 pt-1 sm:text-sm">{req.text}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 rounded-xl bg-brand-50 p-4">
-                <p className="text-sm font-medium text-brand-800">
+              <div className="mt-6 rounded-xl bg-brand-50 p-3 sm:mt-8 sm:p-4">
+                <p className="text-xs font-medium text-brand-800 sm:text-sm">
                   No telemetry. No tracking. No data sent to our servers.
                 </p>
-                <p className="mt-1 text-sm text-brand-600">
+                <p className="mt-1 text-xs text-brand-600 sm:text-sm">
                   OpenConduit is fully self-contained. Your data never leaves your infrastructure.
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-              <h3 className="mb-4 text-lg font-semibold text-gray-900">
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-8">
+              <h3 className="mb-3 text-base font-semibold text-gray-900 sm:mb-4 sm:text-lg">
                 Environment Variables
               </h3>
-              <div className="overflow-x-auto rounded-lg bg-gray-900 p-4">
-                <pre className="font-mono text-xs text-gray-300 leading-relaxed">{`DATABASE_URL=postgresql://user:pass@db:5432/openconduit
+              <div className="overflow-x-auto rounded-lg bg-gray-900 p-3 sm:p-4">
+                <pre className="font-mono text-[10px] text-gray-300 leading-relaxed sm:text-xs">{`DATABASE_URL=postgresql://user:pass@db:5432/openconduit
 JWT_SECRET=<random-64-char-string>
 WHATSAPP_PROVIDER=360dialog
 WHATSAPP_API_KEY=<your-api-key>
@@ -354,18 +355,18 @@ PUBLIC_URL=https://openconduit.yourdomain.com`}</pre>
 
 function Docs() {
   return (
-    <section id="docs" className="py-24 bg-gray-50">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="docs" className="py-16 bg-gray-50 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
             Documentation
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-gray-600">
+          <p className="mx-auto mt-3 max-w-xl text-sm text-gray-600 sm:mt-4 sm:text-base">
             Everything you need to get up and running.
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {[
             {
               title: "Quick Start Guide",
@@ -403,13 +404,13 @@ function Docs() {
               href={doc.link}
               target={doc.link.startsWith("http") ? "_blank" : undefined}
               rel={doc.link.startsWith("http") ? "noopener noreferrer" : undefined}
-              className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:border-brand-200"
+              className="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-brand-200 sm:p-6"
             >
-              <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-gray-900 group-hover:text-brand-600">
+              <h3 className="mb-1.5 flex items-center gap-2 text-sm font-semibold text-gray-900 group-hover:text-brand-600 sm:mb-2 sm:text-base">
                 {doc.title}
                 <ChevronRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
               </h3>
-              <p className="text-sm text-gray-500">{doc.description}</p>
+              <p className="text-xs text-gray-500 sm:text-sm">{doc.description}</p>
             </a>
           ))}
         </div>
@@ -420,21 +421,21 @@ function Docs() {
 
 function WhyOpenConduit() {
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 items-center">
+    <section className="py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-center">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
               Built for <span className="gradient-text">real businesses</span>
             </h2>
-            <p className="mt-4 text-gray-600 leading-relaxed">
+            <p className="mt-3 text-sm text-gray-600 leading-relaxed sm:mt-4 sm:text-base">
               OpenConduit is designed for freelancers, agencies, and local
               businesses in emerging markets who already use WhatsApp as their
               primary business channel. No complex setup, no per-seat pricing,
               no vendor lock-in.
             </p>
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-6 space-y-3 sm:mt-8 sm:space-y-4">
               {[
                 "Your data stays on your server - full data sovereignty",
                 "No per-seat or per-message fees from OpenConduit",
@@ -442,38 +443,38 @@ function WhyOpenConduit() {
                 "Works with your existing WhatsApp Business API provider",
                 "Runs on a $5/month VPS - no expensive infrastructure",
               ].map((point) => (
-                <div key={point} className="flex items-start gap-3">
+                <div key={point} className="flex items-start gap-2.5 sm:gap-3">
                   <div className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-brand-100">
                     <Check className="h-3 w-3 text-brand-600" />
                   </div>
-                  <p className="text-sm text-gray-600">{point}</p>
+                  <p className="text-xs text-gray-600 sm:text-sm">{point}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-brand-50 to-emerald-50 p-8">
-            <div className="space-y-4">
-              <div className="rounded-xl bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-brand-100 flex items-center justify-center text-sm font-bold text-brand-600">R</div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">Rahul Sharma</p>
-                    <p className="text-xs text-gray-500">+91 98765 43210</p>
+          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-brand-50 to-emerald-50 p-4 sm:p-8">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="rounded-xl bg-white p-3 shadow-sm sm:p-4">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="h-8 w-8 rounded-full bg-brand-100 flex items-center justify-center text-xs font-bold text-brand-600 sm:h-10 sm:w-10 sm:text-sm">R</div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-medium text-gray-900 sm:text-sm">Rahul Sharma</p>
+                    <p className="text-[10px] text-gray-500 sm:text-xs">+91 98765 43210</p>
                   </div>
-                  <span className="ml-auto rounded-full bg-brand-100 px-2 py-0.5 text-xs font-medium text-brand-700">Interested</span>
+                  <span className="flex-shrink-0 rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-medium text-brand-700 sm:text-xs">Interested</span>
                 </div>
               </div>
-              <div className="rounded-xl bg-white p-4 shadow-sm">
-                <div className="flex gap-3">
-                  <div className="rounded-2xl rounded-tl-sm bg-gray-100 px-4 py-2">
-                    <p className="text-sm text-gray-700">Hi, I saw your product demo. What's the pricing?</p>
+              <div className="rounded-xl bg-white p-3 shadow-sm sm:p-4">
+                <div className="flex gap-2 sm:gap-3">
+                  <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-gray-100 px-3 py-2 sm:px-4">
+                    <p className="text-xs text-gray-700 sm:text-sm">Hi, I saw your product demo. What's the pricing?</p>
                     <p className="mt-1 text-[10px] text-gray-400">10:23 AM</p>
                   </div>
                 </div>
                 <div className="mt-2 flex justify-end">
-                  <div className="rounded-2xl rounded-tr-sm bg-brand-500 px-4 py-2">
-                    <p className="text-sm text-white">Thanks for reaching out! Let me share our pricing guide.</p>
+                  <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-brand-500 px-3 py-2 sm:px-4">
+                    <p className="text-xs text-white sm:text-sm">Thanks for reaching out! Let me share our pricing guide.</p>
                     <p className="mt-1 text-[10px] text-brand-200">10:25 AM &middot; Read</p>
                   </div>
                 </div>
@@ -488,9 +489,9 @@ function WhyOpenConduit() {
 
 function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white py-12">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+    <footer className="border-t border-gray-200 bg-white py-8 sm:py-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
           <div className="flex items-center gap-2.5">
             <div className="h-7 w-7 overflow-hidden rounded-lg">
               <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
@@ -498,7 +499,7 @@ function Footer() {
             <span className="text-sm font-bold">OpenConduit</span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5 sm:gap-6">
             <a
               href="https://github.com/growvth/openconduit"
               target="_blank"
