@@ -131,7 +131,7 @@ function Hero() {
         <div className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4">
           <a
             href="#self-hosting"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all hover:bg-brand-700 sm:w-auto"
           >
             Get Started
             <ArrowRight className="h-5 w-5" />
@@ -140,29 +140,49 @@ function Hero() {
             href="https://github.com/growvth/openconduit"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3 text-base font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 text-base font-semibold text-gray-900 shadow-sm transition-all hover:bg-gray-50 sm:w-auto"
           >
             <GitBranch className="h-5 w-5" />
             View on GitHub
           </a>
         </div>
 
-        {/* Quick start command */}
-        <div className="mx-auto mt-8 max-w-xl sm:mt-12">
-          <button
-            onClick={copyCommand}
-            className="group flex w-full items-center gap-2 rounded-xl border border-gray-200 bg-gray-900 px-3 py-3 text-left shadow-lg transition-all hover:border-gray-300 sm:gap-3 sm:px-5 sm:py-3.5"
-          >
-            <Terminal className="h-4 w-4 flex-shrink-0 text-brand-400 sm:h-5 sm:w-5" />
-            <code className="flex-1 truncate font-mono text-xs text-gray-300 sm:text-sm">
-              git clone ... && docker compose up
-            </code>
-            {copied ? (
-              <Check className="h-4 w-4 flex-shrink-0 text-brand-400" />
-            ) : (
-              <Copy className="h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-gray-300" />
-            )}
-          </button>
+        {/* Quick start terminal */}
+        <div className="mx-auto mt-8 max-w-lg sm:mt-12">
+          <div className="group relative overflow-hidden rounded-xl border border-gray-700 bg-gray-900 shadow-lg">
+            {/* Title bar */}
+            <div className="flex items-center justify-between border-b border-gray-800 px-4 py-2.5">
+              <div className="flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
+                <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
+              </div>
+              <span className="text-[11px] text-gray-500">terminal</span>
+              <button
+                onClick={copyCommand}
+                className="rounded-md p-1 text-gray-500 transition-colors hover:text-gray-300"
+                title="Copy to clipboard"
+              >
+                {copied ? (
+                  <Check className="h-3.5 w-3.5 text-brand-400" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5" />
+                )}
+              </button>
+            </div>
+            {/* Commands */}
+            <div className="px-4 py-3 font-mono text-[13px] leading-relaxed text-left">
+              <div>
+                <span className="text-gray-400">$</span> <span className="text-yellow-300">git</span> <span className="text-gray-100">clone</span> <span className="text-emerald-300">https://github.com/growvth/openconduit.git</span>
+              </div>
+              <div>
+                <span className="text-gray-400">$</span> <span className="text-yellow-300">cd</span> <span className="text-gray-100">openconduit</span>
+              </div>
+              <div>
+                <span className="text-gray-400">$</span> <span className="text-yellow-300">docker</span> <span className="text-gray-100">compose</span> <span className="text-gray-100">up</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

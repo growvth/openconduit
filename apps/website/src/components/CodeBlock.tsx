@@ -29,21 +29,36 @@ function highlightBash(code: string): React.ReactNode[] {
     }
 
     // Tokenize the rest
+    const commands = new Set(["sudo", "npm", "npx", "git", "docker", "cd", "cp", "mv", "mkdir", "curl", "wget", "cat", "echo", "export", "source", "openssl", "ngrok", "cloudflared", "ufw"]);
     const tokens = remaining.match(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|&&|\|\||[|><;]|--?\w[\w-]*|\S+|\s+)/g) || [remaining];
+    let expectCommand = true;
 
     for (const token of tokens) {
+      if (/^\s+$/.test(token)) {
+        parts.push(<span key={partKey++}>{token}</span>);
+        continue;
+      }
       if (/^&&$|^\|\|$|^[|><;]$/.test(token)) {
         parts.push(<span key={partKey++} className="text-amber-300">{token}</span>);
+        expectCommand = true;
       } else if (/^--?\w/.test(token)) {
         parts.push(<span key={partKey++} className="text-sky-300">{token}</span>);
+        expectCommand = false;
       } else if (/^["']/.test(token)) {
         parts.push(<span key={partKey++} className="text-emerald-300">{token}</span>);
+        expectCommand = false;
       } else if (/^\d+$/.test(token)) {
         parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
-      } else if (partKey === 0 || (parts.length > 0 && /^(sudo|npm|npx|git|docker|cd|cp|mv|mkdir|curl|wget|cat|echo|export|source)$/.test(token))) {
+        expectCommand = false;
+      } else if (expectCommand && commands.has(token)) {
         parts.push(<span key={partKey++} className="text-yellow-300">{token}</span>);
+        expectCommand = false;
+      } else if (/^https?:\/\//.test(token)) {
+        parts.push(<span key={partKey++} className="text-emerald-300">{token}</span>);
+        expectCommand = false;
       } else {
         parts.push(<span key={partKey++} className="text-gray-100">{token}</span>);
+        expectCommand = false;
       }
     }
 
