@@ -146,3 +146,5 @@ apps/api/dist
 apps/web/dist
 apps/website/dist
 packages/shared/dist
+
+.DS_Store
