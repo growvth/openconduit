@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 import {
   MessageSquare,
   Users,
@@ -19,8 +20,17 @@ import {
   Lock,
   Database,
   Copy,
+  ExternalLink,
 } from "lucide-react";
 import clsx from "clsx";
+import { CodeBlock } from "./components/CodeBlock";
+import { DocsLayout } from "./components/DocsLayout";
+import { QuickStartPage } from "./pages/docs/QuickStart";
+import { ApiReferencePage } from "./pages/docs/ApiReference";
+import { WhatsAppSetupPage } from "./pages/docs/WhatsAppSetup";
+import { WebhooksPage } from "./pages/docs/Webhooks";
+import { SecurityPage } from "./pages/docs/Security";
+import { ContributingPage } from "./pages/docs/Contributing";
 
 function Nav() {
   const [open, setOpen] = useState(false);
@@ -28,15 +38,18 @@ function Nav() {
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-        <a href="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img src="/logo.svg" alt="OpenConduit" className="h-7" />
           <span className="text-lg font-bold">OpenConduit</span>
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#features" className="text-sm font-medium text-gray-600 hover:text-gray-900">Features</a>
-          <a href="#self-hosting" className="text-sm font-medium text-gray-600 hover:text-gray-900">Self-Hosting</a>
-          <a href="#docs" className="text-sm font-medium text-gray-600 hover:text-gray-900">Docs</a>
+          <a href="/#features" className="text-sm font-medium text-gray-600 hover:text-gray-900">Features</a>
+          <a href="/#self-hosting" className="text-sm font-medium text-gray-600 hover:text-gray-900">Self-Hosting</a>
+          <Link to="/docs/quick-start" className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900">
+            Docs
+            <ExternalLink className="h-3 w-3" />
+          </Link>
           <a
             href="https://github.com/growvth/openconduit"
             target="_blank"
@@ -56,9 +69,12 @@ function Nav() {
       {open && (
         <div className="border-t border-gray-100 bg-white px-4 pb-4 pt-2 md:hidden">
           <div className="flex flex-col gap-1">
-            <a href="#features" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Features</a>
-            <a href="#self-hosting" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Self-Hosting</a>
-            <a href="#docs" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Docs</a>
+            <a href="/#features" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Features</a>
+            <a href="/#self-hosting" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">Self-Hosting</a>
+            <Link to="/docs/quick-start" onClick={() => setOpen(false)} className="inline-flex items-center gap-1 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50">
+              Docs
+              <ExternalLink className="h-3 w-3" />
+            </Link>
             <a
               href="https://github.com/growvth/openconduit"
               target="_blank"
@@ -240,6 +256,30 @@ function Features() {
 }
 
 function SelfHosting() {
+  const steps = [
+    {
+      step: "1",
+      title: "Clone & configure",
+      description: "Clone the repository and copy .env.example to .env. Set your database password, JWT secret, and domain.",
+      code: "git clone https://github.com/growvth/openconduit.git\ncd openconduit\ncp .env.example .env",
+      language: "bash" as const,
+    },
+    {
+      step: "2",
+      title: "Start the stack",
+      description: "Docker Compose brings up the API, database, and reverse proxy with automatic TLS.",
+      code: "docker compose up -d",
+      language: "bash" as const,
+    },
+    {
+      step: "3",
+      title: "Configure WhatsApp",
+      description: "Open the Settings page, enter your WhatsApp provider credentials, and copy the webhook URL to your provider dashboard.",
+      code: "# Visit https://yourdomain.com\n# Login as admin@openconduit.dev\n# Go to Settings > WhatsApp Provider",
+      language: "bash" as const,
+    },
+  ];
+
   return (
     <section id="self-hosting" className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -255,26 +295,7 @@ function SelfHosting() {
         <div className="mt-10 grid grid-cols-1 gap-8 sm:mt-16 lg:grid-cols-2 lg:gap-12">
           {/* Steps */}
           <div className="space-y-6 sm:space-y-8">
-            {[
-              {
-                step: "1",
-                title: "Clone & configure",
-                description: "Clone the repository and copy .env.example to .env. Set your database password, JWT secret, and domain.",
-                code: "git clone https://github.com/growvth/openconduit.git\ncd openconduit\ncp .env.example .env",
-              },
-              {
-                step: "2",
-                title: "Start the stack",
-                description: "Docker Compose brings up the API, database, and reverse proxy with automatic TLS.",
-                code: "docker compose up -d",
-              },
-              {
-                step: "3",
-                title: "Configure WhatsApp",
-                description: "Open the Settings page, enter your WhatsApp provider credentials, and copy the webhook URL to your provider dashboard.",
-                code: "# Visit https://yourdomain.com\n# Login as admin@openconduit.dev\n# Go to Settings > WhatsApp Provider",
-              },
-            ].map((item) => (
+            {steps.map((item) => (
               <div key={item.step} className="flex gap-3 sm:gap-4">
                 <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand-500 text-xs font-bold text-white sm:h-9 sm:w-9 sm:text-sm">
                   {item.step}
@@ -286,10 +307,8 @@ function SelfHosting() {
                   <p className="mt-1 text-xs text-gray-500 sm:text-sm">
                     {item.description}
                   </p>
-                  <div className="mt-3 overflow-x-auto rounded-lg bg-gray-900 p-3">
-                    <pre className="text-xs sm:text-sm">
-                      <code className="font-mono text-gray-300 whitespace-pre">{item.code}</code>
-                    </pre>
+                  <div className="mt-3">
+                    <CodeBlock language={item.language} code={item.code} />
                   </div>
                 </div>
               </div>
@@ -332,15 +351,16 @@ function SelfHosting() {
               <h3 className="mb-3 text-base font-semibold text-gray-900 sm:mb-4 sm:text-lg">
                 Environment Variables
               </h3>
-              <div className="overflow-x-auto rounded-lg bg-gray-900 p-3 sm:p-4">
-                <pre className="font-mono text-[10px] text-gray-300 leading-relaxed sm:text-xs">{`DATABASE_URL=postgresql://user:pass@db:5432/openconduit
+              <CodeBlock
+                language="env"
+                code={`DATABASE_URL=postgresql://user:pass@db:5432/openconduit
 JWT_SECRET=<random-64-char-string>
 WHATSAPP_PROVIDER=360dialog
 WHATSAPP_API_KEY=<your-api-key>
 WHATSAPP_PHONE_NUMBER_ID=<your-phone-id>
 WHATSAPP_WEBHOOK_SECRET=<your-secret>
-PUBLIC_URL=https://openconduit.yourdomain.com`}</pre>
-              </div>
+PUBLIC_URL=https://openconduit.yourdomain.com`}
+              />
             </div>
           </div>
         </div>
@@ -348,6 +368,39 @@ PUBLIC_URL=https://openconduit.yourdomain.com`}</pre>
     </section>
   );
 }
+
+const docLinks = [
+  {
+    title: "Quick Start Guide",
+    description: "Get OpenConduit running in under 5 minutes with Docker Compose.",
+    path: "/docs/quick-start",
+  },
+  {
+    title: "API Reference",
+    description: "Full REST API documentation with authentication, contacts, messages, and more.",
+    path: "/docs/api-reference",
+  },
+  {
+    title: "WhatsApp Provider Setup",
+    description: "Step-by-step guides for configuring Meta Cloud API, 360dialog, and Twilio.",
+    path: "/docs/whatsapp-setup",
+  },
+  {
+    title: "Webhook Configuration",
+    description: "How to expose your instance, register webhooks, and handle verification.",
+    path: "/docs/webhooks",
+  },
+  {
+    title: "Security Best Practices",
+    description: "JWT configuration, webhook HMAC validation, rate limiting, and password policies.",
+    path: "/docs/security",
+  },
+  {
+    title: "Contributing",
+    description: "How to contribute to OpenConduit. Development setup, coding standards, and PR process.",
+    path: "/docs/contributing",
+  },
+];
 
 function Docs() {
   return (
@@ -363,43 +416,10 @@ function Docs() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-          {[
-            {
-              title: "Quick Start Guide",
-              description: "Get OpenConduit running in under 5 minutes with Docker Compose.",
-              link: "#self-hosting",
-            },
-            {
-              title: "API Reference",
-              description: "Full REST API documentation with authentication, contacts, messages, and more.",
-              link: "https://github.com/growvth/openconduit",
-            },
-            {
-              title: "WhatsApp Provider Setup",
-              description: "Step-by-step guides for configuring Meta Cloud API, 360dialog, and Twilio.",
-              link: "https://github.com/growvth/openconduit",
-            },
-            {
-              title: "Webhook Configuration",
-              description: "How to expose your instance, register webhooks, and handle verification.",
-              link: "https://github.com/growvth/openconduit",
-            },
-            {
-              title: "Security Best Practices",
-              description: "JWT configuration, webhook HMAC validation, rate limiting, and password policies.",
-              link: "https://github.com/growvth/openconduit",
-            },
-            {
-              title: "Contributing",
-              description: "How to contribute to OpenConduit. Development setup, coding standards, and PR process.",
-              link: "https://github.com/growvth/openconduit",
-            },
-          ].map((doc) => (
-            <a
+          {docLinks.map((doc) => (
+            <Link
               key={doc.title}
-              href={doc.link}
-              target={doc.link.startsWith("http") ? "_blank" : undefined}
-              rel={doc.link.startsWith("http") ? "noopener noreferrer" : undefined}
+              to={doc.path}
               className="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-brand-200 sm:p-6"
             >
               <h3 className="mb-1.5 flex items-center gap-2 text-sm font-semibold text-gray-900 group-hover:text-brand-600 sm:mb-2 sm:text-base">
@@ -407,7 +427,7 @@ function Docs() {
                 <ChevronRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
               </h3>
               <p className="text-xs text-gray-500 sm:text-sm">{doc.description}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -503,12 +523,12 @@ function Footer() {
               <GitBranch className="h-4 w-4" />
               GitHub
             </a>
-            <a href="#features" className="text-sm text-gray-500 hover:text-gray-900">
+            <a href="/#features" className="text-sm text-gray-500 hover:text-gray-900">
               Features
             </a>
-            <a href="#docs" className="text-sm text-gray-500 hover:text-gray-900">
+            <Link to="/docs/quick-start" className="text-sm text-gray-500 hover:text-gray-900">
               Docs
-            </a>
+            </Link>
           </div>
 
           <p className="text-xs text-gray-400">
@@ -520,7 +540,7 @@ function Footer() {
   );
 }
 
-export function App() {
+function LandingPage() {
   return (
     <>
       <Nav />
@@ -531,5 +551,19 @@ export function App() {
       <Docs />
       <Footer />
     </>
+  );
+}
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/docs/quick-start" element={<DocsLayout><QuickStartPage /></DocsLayout>} />
+      <Route path="/docs/api-reference" element={<DocsLayout><ApiReferencePage /></DocsLayout>} />
+      <Route path="/docs/whatsapp-setup" element={<DocsLayout><WhatsAppSetupPage /></DocsLayout>} />
+      <Route path="/docs/webhooks" element={<DocsLayout><WebhooksPage /></DocsLayout>} />
+      <Route path="/docs/security" element={<DocsLayout><SecurityPage /></DocsLayout>} />
+      <Route path="/docs/contributing" element={<DocsLayout><ContributingPage /></DocsLayout>} />
+    </Routes>
   );
 }

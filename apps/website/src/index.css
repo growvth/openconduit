@@ -28,4 +28,36 @@
   .glass-card {
     @apply backdrop-blur-sm bg-white/80 border border-gray-200/60;
   }
+
+  .prose-docs {
+    @apply text-sm text-gray-700 leading-relaxed;
+  }
+
+  .prose-docs h1 {
+    @apply text-3xl font-bold text-gray-900 leading-tight;
+  }
+
+  .prose-docs h2 {
+    @apply text-xl font-semibold text-gray-900;
+  }
+
+  .prose-docs h3 {
+    @apply text-base font-semibold text-gray-900;
+  }
+
+  .prose-docs p {
+    @apply text-sm text-gray-600 leading-relaxed;
+  }
+
+  .prose-docs a {
+    @apply text-brand-600 hover:text-brand-700;
+  }
+
+  .prose-docs code {
+    @apply rounded bg-gray-100 px-1.5 py-0.5 text-xs font-mono text-gray-800;
+  }
+
+  .prose-docs pre code {
+    @apply bg-transparent p-0 text-inherit;
+  }
 }
