@@ -29,9 +29,7 @@ function Nav() {
     <nav className="fixed top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
         <a href="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 overflow-hidden rounded-lg">
-            <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
-          </div>
+          <img src="/logo.svg" alt="OpenConduit" className="h-7" />
           <span className="text-lg font-bold">OpenConduit</span>
         </a>
 
@@ -95,9 +93,7 @@ function Hero() {
       </div>
 
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
-        <div className="mx-auto mb-5 h-16 w-16 overflow-hidden rounded-2xl shadow-lg sm:mb-6 sm:h-20 sm:w-20">
-          <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
-        </div>
+        <img src="/logo.svg" alt="OpenConduit" className="mx-auto mb-5 h-16 sm:mb-6 sm:h-20" />
 
         <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700 sm:mb-6 sm:px-4 sm:py-1.5 sm:text-sm">
           <span className="flex h-1.5 w-1.5 rounded-full bg-brand-500 sm:h-2 sm:w-2" />
@@ -493,9 +489,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="h-7 w-7 overflow-hidden rounded-lg">
-              <img src="/logo.png" alt="OpenConduit" className="h-[200%] w-[200%] max-w-none -translate-x-1/4 -translate-y-1/4 object-cover" />
-            </div>
+            <img src="/logo.svg" alt="OpenConduit" className="h-6" />
             <span className="text-sm font-bold">OpenConduit</span>
           </div>
 

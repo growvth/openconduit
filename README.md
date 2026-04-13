@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="openconduit-logo.png" alt="OpenConduit" width="320" height="320" />
+  <img src="logo.svg" alt="OpenConduit" width="120" />
 </p>
 
 <h1 align="center">OpenConduit</h1>
