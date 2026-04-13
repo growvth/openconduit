@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { JWT_EXPIRY, BCRYPT_COST_FACTOR } from "@openconduit/shared";
 
 function requireEnv(name: string): string {

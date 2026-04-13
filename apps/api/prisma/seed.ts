@@ -14,7 +14,7 @@ async function main() {
   // Create default pipeline stages
   for (const stage of DEFAULT_PIPELINE_STAGES) {
     await prisma.pipelineStage.upsert({
-      where: { id: stage.name }, // will fail on first run, caught by create
+      where: { name: stage.name },
       create: { name: stage.name, order: stage.order, color: stage.color },
       update: {},
     });

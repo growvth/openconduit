@@ -19,7 +19,9 @@ export async function reminderRoutes(app: FastifyInstance): Promise<void> {
   app.addHook("preHandler", authenticate);
 
   app.get("/", async (request) => {
-    const filter = (request.query as Record<string, string>).filter;
+    const query = request.query as Record<string, string>;
+    const filter = query.filter;
+    const search = query.search?.trim();
     const where: Record<string, unknown> = { userId: request.user.id };
 
     const now = new Date();
@@ -35,6 +37,13 @@ export async function reminderRoutes(app: FastifyInstance): Promise<void> {
     } else if (filter === "upcoming") {
       where.dueAt = { gt: endOfDay };
       where.completed = false;
+    }
+
+    if (search) {
+      where.OR = [
+        { note: { contains: search, mode: "insensitive" } },
+        { contact: { name: { contains: search, mode: "insensitive" } } },
+      ];
     }
 
     return prisma.reminder.findMany({

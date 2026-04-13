@@ -1,8 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { api } from "@/lib/api";
-import { ArrowLeft, Phone, Tag, MessageSquare, Trash2, Edit } from "lucide-react";
+import { ArrowLeft, Phone, Tag, MessageSquare, Trash2, Edit, Plus, X, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
+import clsx from "clsx";
+
+interface TagItem {
+  id: string;
+  name: string;
+  color: string;
+}
+
+interface StageItem {
+  id: string;
+  name: string;
+  color: string;
+  order: number;
+}
 
 interface ContactDetail {
   id: string;
@@ -12,8 +26,8 @@ interface ContactDetail {
   optedIn: boolean;
   optedInAt: string | null;
   createdAt: string;
-  tags: { tag: { id: string; name: string; color: string } }[];
-  pipelineStage: { id: string; name: string; color: string } | null;
+  tags: { tag: TagItem }[];
+  pipelineStage: StageItem | null;
   assignedTo: { id: string; name: string } | null;
   conversations: { id: string; status: string; updatedAt: string }[];
 }
@@ -27,13 +41,27 @@ export function ContactDetailPage() {
   const [editName, setEditName] = useState("");
   const [editNotes, setEditNotes] = useState("");
 
+  // Tag picker state
+  const [allTags, setAllTags] = useState<TagItem[]>([]);
+  const [showTagPicker, setShowTagPicker] = useState(false);
+
+  // Stage picker state
+  const [allStages, setAllStages] = useState<StageItem[]>([]);
+  const [showStagePicker, setShowStagePicker] = useState(false);
+
   useEffect(() => {
     async function load() {
       try {
-        const data = await api.get<ContactDetail>(`/contacts/${id}`);
+        const [data, tags, stages] = await Promise.all([
+          api.get<ContactDetail>(`/contacts/${id}`),
+          api.get<TagItem[]>("/tags"),
+          api.get<StageItem[]>("/pipeline/stages"),
+        ]);
         setContact(data);
         setEditName(data.name);
         setEditNotes(data.notes ?? "");
+        setAllTags(tags);
+        setAllStages(stages);
       } catch {
         // failed
       } finally {
@@ -66,6 +94,38 @@ export function ContactDetailPage() {
     }
   };
 
+  const addTag = async (tagId: string) => {
+    try {
+      const updated = await api.post<ContactDetail>(`/contacts/${id}/tags`, { tagIds: [tagId] });
+      setContact({ ...contact!, tags: updated.tags });
+      setShowTagPicker(false);
+    } catch {
+      // failed
+    }
+  };
+
+  const removeTag = async (tagId: string) => {
+    try {
+      await api.delete(`/contacts/${id}/tags/${tagId}`);
+      setContact({
+        ...contact!,
+        tags: contact!.tags.filter((t) => t.tag.id !== tagId),
+      });
+    } catch {
+      // failed
+    }
+  };
+
+  const setStage = async (stageId: string | null) => {
+    try {
+      const updated = await api.put<ContactDetail>(`/contacts/${id}/stage`, { stageId });
+      setContact({ ...contact!, pipelineStage: updated.pipelineStage });
+      setShowStagePicker(false);
+    } catch {
+      // failed
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center">
@@ -81,6 +141,9 @@ export function ContactDetailPage() {
       </div>
     );
   }
+
+  const assignedTagIds = new Set(contact.tags.map((t) => t.tag.id));
+  const availableTags = allTags.filter((t) => !assignedTagIds.has(t.id));
 
   return (
     <div className="p-8">
@@ -218,17 +281,100 @@ export function ContactDetailPage() {
             </dl>
           </div>
 
+          {/* Pipeline Stage */}
+          <div className="rounded-xl border border-gray-200 bg-white p-6">
+            <h2 className="mb-3 text-sm font-medium text-gray-500">Pipeline Stage</h2>
+            <div className="relative">
+              <button
+                onClick={() => setShowStagePicker(!showStagePicker)}
+                className="flex w-full items-center justify-between rounded-lg border border-gray-200 px-3 py-2 text-left text-sm hover:bg-gray-50"
+              >
+                {contact.pipelineStage ? (
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{ backgroundColor: contact.pipelineStage.color }}
+                    />
+                    {contact.pipelineStage.name}
+                  </span>
+                ) : (
+                  <span className="text-gray-400">No stage</span>
+                )}
+                <ChevronDown className="h-4 w-4 text-gray-400" />
+              </button>
+              {showStagePicker && (
+                <div className="absolute left-0 right-0 top-full z-10 mt-1 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                  <button
+                    onClick={() => setStage(null)}
+                    className="block w-full px-3 py-2 text-left text-sm text-gray-400 hover:bg-gray-50"
+                  >
+                    No stage
+                  </button>
+                  {allStages.map((stage) => (
+                    <button
+                      key={stage.id}
+                      onClick={() => setStage(stage.id)}
+                      className={clsx(
+                        "flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50",
+                        contact.pipelineStage?.id === stage.id
+                          ? "bg-gray-50 font-medium"
+                          : "",
+                      )}
+                    >
+                      <span
+                        className="h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: stage.color }}
+                      />
+                      {stage.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Tags */}
           <div className="rounded-xl border border-gray-200 bg-white p-6">
-            <h2 className="mb-3 text-sm font-medium text-gray-500">Tags</h2>
-            {contact.tags.length === 0 ? (
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm font-medium text-gray-500">Tags</h2>
+              {availableTags.length > 0 && (
+                <button
+                  onClick={() => setShowTagPicker(!showTagPicker)}
+                  className="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+            {showTagPicker && (
+              <div className="mb-3 rounded-lg border border-gray-200 bg-gray-50 p-2">
+                <p className="mb-2 text-xs font-medium text-gray-500">Add a tag</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {availableTags.map((tag) => (
+                    <button
+                      key={tag.id}
+                      onClick={() => addTag(tag.id)}
+                      className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium transition-opacity hover:opacity-80"
+                      style={{
+                        backgroundColor: `${tag.color}20`,
+                        color: tag.color,
+                      }}
+                    >
+                      <Plus className="h-2.5 w-2.5" />
+                      {tag.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {contact.tags.length === 0 && !showTagPicker ? (
               <p className="text-sm text-gray-400">No tags</p>
             ) : (
               <div className="flex flex-wrap gap-2">
                 {contact.tags.map(({ tag }) => (
                   <span
                     key={tag.id}
-                    className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium"
+                    className="group inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium"
                     style={{
                       backgroundColor: `${tag.color}20`,
                       color: tag.color,
@@ -236,27 +382,17 @@ export function ContactDetailPage() {
                   >
                     <Tag className="h-2.5 w-2.5" />
                     {tag.name}
+                    <button
+                      onClick={() => removeTag(tag.id)}
+                      className="ml-0.5 rounded-full p-0.5 opacity-0 transition-opacity hover:bg-black/10 group-hover:opacity-100"
+                    >
+                      <X className="h-2.5 w-2.5" />
+                    </button>
                   </span>
                 ))}
               </div>
             )}
           </div>
-
-          {/* Pipeline stage */}
-          {contact.pipelineStage && (
-            <div className="rounded-xl border border-gray-200 bg-white p-6">
-              <h2 className="mb-3 text-sm font-medium text-gray-500">Pipeline Stage</h2>
-              <span
-                className="rounded-full px-3 py-1 text-sm font-medium"
-                style={{
-                  backgroundColor: `${contact.pipelineStage.color}20`,
-                  color: contact.pipelineStage.color,
-                }}
-              >
-                {contact.pipelineStage.name}
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </div>

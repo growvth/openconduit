@@ -217,6 +217,14 @@ export async function contactRoutes(app: FastifyInstance): Promise<void> {
       skipDuplicates: true,
     });
 
+    // Auto-remove "Unknown" tag when a real tag is added
+    const unknownTag = await prisma.tag.findUnique({ where: { name: "Unknown" } });
+    if (unknownTag && !parsed.data.tagIds.includes(unknownTag.id)) {
+      await prisma.contactTag.deleteMany({
+        where: { contactId: request.params.id, tagId: unknownTag.id },
+      });
+    }
+
     const contact = await prisma.contact.findUnique({
       where: { id: request.params.id },
       include: { tags: { include: { tag: true } } },
