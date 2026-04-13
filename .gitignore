@@ -148,3 +148,9 @@ apps/website/dist
 packages/shared/dist
 
 .DS_Store
+
+# Generated config files
+*.config.d.ts
+apps/website/postcss.config.js
+apps/website/vite.config.js
+apps/website/tailwind.config.js
