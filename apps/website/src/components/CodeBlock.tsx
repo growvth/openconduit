@@ -13,7 +13,7 @@ function highlightBash(code: string): React.ReactNode[] {
 
     // Comments
     if (trimmed.startsWith("#")) {
-      return <span key={i} className="text-gray-500">{line}{"\n"}</span>;
+      return <span key={i} className="text-gray-400 italic">{line}{"\n"}</span>;
     }
 
     // Highlight commands and flags
@@ -24,7 +24,7 @@ function highlightBash(code: string): React.ReactNode[] {
     // Match leading $ prompt
     if (trimmed.startsWith("$ ")) {
       const indent = line.length - trimmed.length;
-      parts.push(<span key={partKey++} className="text-gray-500">{" ".repeat(indent)}$ </span>);
+      parts.push(<span key={partKey++} className="text-gray-400">{" ".repeat(indent)}$ </span>);
       remaining = trimmed.slice(2);
     }
 
@@ -33,17 +33,17 @@ function highlightBash(code: string): React.ReactNode[] {
 
     for (const token of tokens) {
       if (/^&&$|^\|\|$|^[|><;]$/.test(token)) {
-        parts.push(<span key={partKey++} className="text-amber-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-amber-300">{token}</span>);
       } else if (/^--?\w/.test(token)) {
-        parts.push(<span key={partKey++} className="text-sky-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-sky-300">{token}</span>);
       } else if (/^["']/.test(token)) {
-        parts.push(<span key={partKey++} className="text-green-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-emerald-300">{token}</span>);
       } else if (/^\d+$/.test(token)) {
-        parts.push(<span key={partKey++} className="text-purple-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
       } else if (partKey === 0 || (parts.length > 0 && /^(sudo|npm|npx|git|docker|cd|cp|mv|mkdir|curl|wget|cat|echo|export|source)$/.test(token))) {
-        parts.push(<span key={partKey++} className="text-green-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-yellow-300">{token}</span>);
       } else {
-        parts.push(<span key={partKey++}>{token}</span>);
+        parts.push(<span key={partKey++} className="text-gray-100">{token}</span>);
       }
     }
 
@@ -55,7 +55,7 @@ function highlightBash(code: string): React.ReactNode[] {
 function highlightEnv(code: string): React.ReactNode[] {
   return code.split("\n").map((line, i) => {
     if (line.trimStart().startsWith("#")) {
-      return <span key={i} className="text-gray-500">{line}{"\n"}</span>;
+      return <span key={i} className="text-gray-400 italic">{line}{"\n"}</span>;
     }
 
     const eqIndex = line.indexOf("=");
@@ -64,15 +64,15 @@ function highlightEnv(code: string): React.ReactNode[] {
       const value = line.slice(eqIndex + 1);
       return (
         <span key={i}>
-          <span className="text-sky-400">{key}</span>
+          <span className="text-sky-300">{key}</span>
           <span className="text-gray-400">=</span>
-          <span className="text-green-400">{value}</span>
+          <span className="text-emerald-300">{value}</span>
           {"\n"}
         </span>
       );
     }
 
-    return <span key={i}>{line}{"\n"}</span>;
+    return <span key={i} className="text-gray-100">{line}{"\n"}</span>;
   });
 }
 
@@ -85,17 +85,17 @@ function highlightJson(code: string): React.ReactNode[] {
 
     for (const token of tokens) {
       if (/^["']/.test(token) && line.includes(":") && line.indexOf(token) < line.indexOf(":")) {
-        parts.push(<span key={partKey++} className="text-sky-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-sky-300">{token}</span>);
       } else if (/^["']/.test(token)) {
-        parts.push(<span key={partKey++} className="text-green-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-emerald-300">{token}</span>);
       } else if (/^(true|false|null)$/.test(token)) {
-        parts.push(<span key={partKey++} className="text-purple-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
       } else if (/^\d/.test(token)) {
-        parts.push(<span key={partKey++} className="text-purple-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
       } else if (/^[{}[\],:]$/.test(token)) {
-        parts.push(<span key={partKey++} className="text-gray-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-gray-300">{token}</span>);
       } else {
-        parts.push(<span key={partKey++}>{token}</span>);
+        parts.push(<span key={partKey++} className="text-gray-100">{token}</span>);
       }
     }
 
@@ -105,11 +105,13 @@ function highlightJson(code: string): React.ReactNode[] {
 }
 
 function highlightTypescript(code: string): React.ReactNode[] {
-  const keywords = new Set(["import", "export", "from", "const", "let", "var", "function", "return", "if", "else", "for", "while", "class", "interface", "type", "enum", "async", "await", "new", "this", "extends", "implements", "default", "switch", "case", "break", "continue", "throw", "try", "catch", "finally", "typeof", "instanceof", "in", "of", "void", "null", "undefined", "true", "false"]);
+  const keywords = new Set(["import", "export", "from", "const", "let", "var", "function", "return", "if", "else", "for", "while", "class", "interface", "type", "enum", "async", "await", "new", "this", "extends", "implements", "default", "switch", "case", "break", "continue", "throw", "try", "catch", "finally", "typeof", "instanceof", "in", "of", "void"]);
+  const builtinTypes = new Set(["string", "number", "boolean", "object", "any", "never", "unknown", "void", "Record", "Promise", "Array", "Map", "Set", "Buffer", "Partial", "Required", "Omit", "Pick"]);
+  const constants = new Set(["null", "undefined", "true", "false"]);
 
   return code.split("\n").map((line, i) => {
     if (line.trimStart().startsWith("//")) {
-      return <span key={i} className="text-gray-500">{line}{"\n"}</span>;
+      return <span key={i} className="text-gray-400 italic">{line}{"\n"}</span>;
     }
 
     const parts: React.ReactNode[] = [];
@@ -117,19 +119,42 @@ function highlightTypescript(code: string): React.ReactNode[] {
 
     const tokens = line.match(/(\/\/.*$|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`|=>|[{}()[\];,.:?!<>=+\-*/&|^~%@#]|\b\d+\.?\d*\b|\b\w+\b|\s+)/g) || [line];
 
-    for (const token of tokens) {
+    for (let t = 0; t < tokens.length; t++) {
+      const token = tokens[t];
       if (/^\/\//.test(token)) {
-        parts.push(<span key={partKey++} className="text-gray-500">{token}</span>);
+        parts.push(<span key={partKey++} className="text-gray-400 italic">{token}</span>);
       } else if (/^["'`]/.test(token)) {
-        parts.push(<span key={partKey++} className="text-green-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-emerald-300">{token}</span>);
+      } else if (constants.has(token)) {
+        parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
       } else if (keywords.has(token)) {
-        parts.push(<span key={partKey++} className="text-purple-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-pink-400">{token}</span>);
+      } else if (builtinTypes.has(token)) {
+        parts.push(<span key={partKey++} className="text-cyan-300">{token}</span>);
+      } else if (/^[A-Z]/.test(token)) {
+        // PascalCase = type/interface/class name
+        parts.push(<span key={partKey++} className="text-yellow-300">{token}</span>);
       } else if (/^\d/.test(token)) {
-        parts.push(<span key={partKey++} className="text-amber-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
       } else if (/^=>$/.test(token)) {
-        parts.push(<span key={partKey++} className="text-purple-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-pink-400">{token}</span>);
+      } else if (/^[{}()[\];,.<>=+\-*/&|^~%@#:?!]$/.test(token)) {
+        parts.push(<span key={partKey++} className="text-gray-400">{token}</span>);
+      } else if (/^\w+$/.test(token)) {
+        // Check if next non-whitespace token is ( -> function call
+        let isFn = false;
+        for (let j = t + 1; j < tokens.length; j++) {
+          if (/^\s+$/.test(tokens[j])) continue;
+          if (tokens[j] === "(") isFn = true;
+          break;
+        }
+        if (isFn) {
+          parts.push(<span key={partKey++} className="text-blue-300">{token}</span>);
+        } else {
+          parts.push(<span key={partKey++} className="text-gray-100">{token}</span>);
+        }
       } else {
-        parts.push(<span key={partKey++}>{token}</span>);
+        parts.push(<span key={partKey++} className="text-gray-100">{token}</span>);
       }
     }
 
@@ -143,7 +168,7 @@ function highlightSql(code: string): React.ReactNode[] {
 
   return code.split("\n").map((line, i) => {
     if (line.trimStart().startsWith("--")) {
-      return <span key={i} className="text-gray-500">{line}{"\n"}</span>;
+      return <span key={i} className="text-gray-400 italic">{line}{"\n"}</span>;
     }
 
     const parts: React.ReactNode[] = [];
@@ -153,13 +178,13 @@ function highlightSql(code: string): React.ReactNode[] {
 
     for (const token of tokens) {
       if (/^'/.test(token)) {
-        parts.push(<span key={partKey++} className="text-green-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-emerald-300">{token}</span>);
       } else if (keywords.has(token.toUpperCase())) {
-        parts.push(<span key={partKey++} className="text-purple-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-violet-300">{token}</span>);
       } else if (/^\d/.test(token)) {
-        parts.push(<span key={partKey++} className="text-amber-400">{token}</span>);
+        parts.push(<span key={partKey++} className="text-orange-300">{token}</span>);
       } else {
-        parts.push(<span key={partKey++}>{token}</span>);
+        parts.push(<span key={partKey++} className="text-gray-100">{token}</span>);
       }
     }
 
@@ -181,7 +206,13 @@ function highlight(code: string, language: string): React.ReactNode[] {
     case "sql":
       return highlightSql(code);
     default:
-      return [code];
+      return code.split("\n").map((line, i) => {
+        const trimmed = line.trimStart();
+        if (trimmed.startsWith("#")) {
+          return <span key={i} className="text-gray-400 italic">{line}{"\n"}</span>;
+        }
+        return <span key={i} className="text-gray-100">{line}{"\n"}</span>;
+      });
   }
 }
 
@@ -206,7 +237,7 @@ export function CodeBlock({ code, language = "bash", title }: CodeBlockProps) {
       )}
       <div className="relative">
         <pre className="overflow-x-auto p-4 text-[13px] leading-relaxed">
-          <code className="font-mono text-gray-300">
+          <code className="font-mono text-gray-100">
             {highlight(trimmedCode, language)}
           </code>
         </pre>

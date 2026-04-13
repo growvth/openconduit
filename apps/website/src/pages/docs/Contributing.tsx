@@ -114,15 +114,15 @@ npm run dev:website`}
       <ul className="mt-2 space-y-2 text-sm text-gray-600">
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Strict TypeScript everywhere. No <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">any</code> types unless absolutely necessary.
+          <span className="min-w-0">Strict TypeScript everywhere. No <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">any</code> types unless absolutely necessary.</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Use shared types from <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">@openconduit/shared</code> for API contracts between frontend and backend.
+          <span className="min-w-0">Use shared types from <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">@openconduit/shared</code> for API contracts between frontend and backend.</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Validate all input at API boundaries using Zod schemas.
+          <span className="min-w-0">Validate all input at API boundaries using Zod schemas.</span>
         </li>
       </ul>
 
@@ -130,15 +130,15 @@ npm run dev:website`}
       <ul className="mt-2 space-y-2 text-sm text-gray-600">
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Every route must have authentication (use the <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">authenticate</code> or <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">requireAdmin</code> middleware).
+          <span className="min-w-0">Every route must have authentication (use the <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">authenticate</code> or <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">requireAdmin</code> middleware).</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Validate request bodies with Zod before processing.
+          <span className="min-w-0">Validate request bodies with Zod before processing.</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Return consistent error shapes: <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">{`{ error: string }`}</code>.
+          <span className="min-w-0">Return consistent error shapes: <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">{`{ error: string }`}</code>.</span>
         </li>
       </ul>
 
@@ -146,15 +146,15 @@ npm run dev:website`}
       <ul className="mt-2 space-y-2 text-sm text-gray-600">
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Functional components only.
+          <span className="min-w-0">Functional components only.</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Use Tailwind CSS for styling. No CSS modules or styled-components.
+          <span className="min-w-0">Use Tailwind CSS for styling. No CSS modules or styled-components.</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Keep components focused. Split large components into smaller ones.
+          <span className="min-w-0">Keep components focused. Split large components into smaller ones.</span>
         </li>
       </ul>
 

@@ -113,7 +113,7 @@ function validateSignature(payload: string, signature: string, secret: string): 
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">PUBLIC_URL</code> in your <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">.env</code> matches the domain
+          <span className="min-w-0"><code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">PUBLIC_URL</code> in your <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">.env</code> matches the domain</span>
         </li>
       </ul>
 

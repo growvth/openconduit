@@ -178,7 +178,7 @@ sudo ufw enable`}
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          PostgreSQL is not exposed outside the Docker network by default. Do not add port mappings to <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">docker-compose.yml</code> unless you have a specific need
+          <span className="min-w-0">PostgreSQL is not exposed outside the Docker network by default. Do not add port mappings to <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">docker-compose.yml</code> unless you have a specific need</span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
@@ -186,7 +186,7 @@ sudo ufw enable`}
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Back up your database regularly. Use <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">pg_dump</code> or a managed backup solution
+          <span className="min-w-0">Back up your database regularly. Use <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">pg_dump</code> or a managed backup solution</span>
         </li>
       </ul>
       <div className="mt-3">
@@ -204,7 +204,7 @@ cat backup_20260412.sql | docker compose exec -T db psql -U openconduit opencond
       <ul className="mt-3 space-y-2 text-sm text-gray-600">
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
-          Never commit <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">.env</code> to version control. It is already in <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">.gitignore</code>
+          <span className="min-w-0">Never commit <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">.env</code> to version control. It is already in <code className="rounded bg-gray-100 px-1 py-0.5 text-xs font-mono">.gitignore</code></span>
         </li>
         <li className="flex items-start gap-2">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-500" />
@@ -248,14 +248,14 @@ cat backup_20260412.sql | docker compose exec -T db psql -U openconduit opencond
       <p className="mt-2 text-sm text-gray-600">
         If you discover a security vulnerability in OpenConduit, please do not open a public issue. Use GitHub's private vulnerability reporting instead:
       </p>
-      <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-4">
-        <p className="text-sm text-blue-700">
+      <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-4 overflow-hidden">
+        <p className="text-sm text-blue-700 break-words">
           Report vulnerabilities at{" "}
           <a
             href="https://github.com/growvth/openconduit/security/advisories/new"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium underline"
+            className="font-medium underline break-all"
           >
             github.com/growvth/openconduit/security/advisories/new
           </a>

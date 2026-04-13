@@ -1,3 +1,19 @@
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/GeistMono-Medium.woff2') format('woff2');
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -55,9 +71,18 @@
 
   .prose-docs code {
     @apply rounded bg-gray-100 px-1.5 py-0.5 text-xs font-mono text-gray-800;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .prose-docs pre code {
     @apply bg-transparent p-0 text-inherit;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .prose-docs li {
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 }
