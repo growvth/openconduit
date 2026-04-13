@@ -2,6 +2,7 @@ import { useState, useEffect, type FormEvent } from "react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/hooks/useAuth";
 import { Settings, Wifi, WifiOff, Copy, Check } from "lucide-react";
+import { PageTransition, motion, staggerContainer, staggerItem } from "@/components/Motion";
 
 interface AppSettings {
   whatsappProvider: string | null;
@@ -105,6 +106,7 @@ export function SettingsPage() {
   }
 
   return (
+    <PageTransition>
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
@@ -113,9 +115,14 @@ export function SettingsPage() {
         </p>
       </div>
 
-      <div className="mx-auto max-w-2xl space-y-8">
+      <motion.div
+        className="mx-auto max-w-2xl space-y-8"
+        variants={staggerContainer}
+        initial="hidden"
+        animate="show"
+      >
         {/* Webhook URL */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6">
+        <motion.div className="rounded-xl border border-gray-200 bg-white p-6" variants={staggerItem}>
           <h2 className="mb-4 flex items-center gap-2 font-semibold text-gray-900">
             <Settings className="h-5 w-5" />
             Webhook URL
@@ -139,12 +146,13 @@ export function SettingsPage() {
               )}
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Provider settings */}
-        <form
+        <motion.form
           onSubmit={handleSave}
           className="rounded-xl border border-gray-200 bg-white p-6"
+          variants={staggerItem}
         >
           <h2 className="mb-4 font-semibold text-gray-900">
             WhatsApp Provider
@@ -252,8 +260,9 @@ export function SettingsPage() {
               )}
             </button>
           </div>
-        </form>
-      </div>
+        </motion.form>
+      </motion.div>
     </div>
+    </PageTransition>
   );
 }

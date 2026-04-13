@@ -4,6 +4,7 @@ import { api } from "@/lib/api";
 import { Send, ArrowLeft, Clock, User, AlertTriangle } from "lucide-react";
 import clsx from "clsx";
 import { format, differenceInHours } from "date-fns";
+import { motion } from "@/components/Motion";
 
 interface Message {
   id: string;
@@ -29,6 +30,7 @@ export function ConversationDetailPage() {
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const seenMessageIds = useRef(new Set<string>());
 
   const loadConversation = async () => {
     try {
@@ -99,7 +101,12 @@ export function ConversationDetailPage() {
   return (
     <div className="flex h-full flex-col">
       {/* Header */}
-      <div className="flex items-center gap-4 border-b border-gray-200 bg-white px-6 py-4">
+      <motion.div
+        className="flex items-center gap-4 border-b border-gray-200 bg-white px-6 py-4"
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+      >
         <Link
           to="/conversations"
           className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
@@ -130,18 +137,24 @@ export function ConversationDetailPage() {
             View Contact
           </Link>
         </div>
-      </div>
+      </motion.div>
 
       {/* Messages */}
       <div className="flex-1 overflow-auto px-6 py-4">
         <div className="mx-auto max-w-3xl space-y-3">
-          {conversation.messages.map((msg) => (
-            <div
+          {conversation.messages.map((msg, i) => {
+            const isNew = !seenMessageIds.current.has(msg.id);
+            if (isNew) seenMessageIds.current.add(msg.id);
+            return (
+            <motion.div
               key={msg.id}
               className={clsx(
                 "flex",
                 msg.direction === "OUTBOUND" ? "justify-end" : "justify-start",
               )}
+              initial={isNew ? { opacity: 0, y: 8 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: isNew ? Math.min(i * 0.03, 0.3) : 0, ease: "easeOut" }}
             >
               <div
                 className={clsx(
@@ -169,14 +182,20 @@ export function ConversationDetailPage() {
                   )}
                 </div>
               </div>
-            </div>
-          ))}
+            </motion.div>
+          );
+          })}
           <div ref={messagesEndRef} />
         </div>
       </div>
 
       {/* Message input */}
-      <div className="border-t border-gray-200 bg-white px-6 py-4">
+      <motion.div
+        className="border-t border-gray-200 bg-white px-6 py-4"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, delay: 0.1, ease: "easeOut" }}
+      >
         <form
           onSubmit={handleSend}
           className="mx-auto flex max-w-3xl items-center gap-3"
@@ -193,15 +212,16 @@ export function ConversationDetailPage() {
             disabled={isOutsideWindow}
             className="flex-1 rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 disabled:bg-gray-50 disabled:text-gray-400"
           />
-          <button
+          <motion.button
             type="submit"
             disabled={sending || !newMessage.trim() || isOutsideWindow}
             className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-500 text-white shadow-sm hover:bg-brand-600 disabled:opacity-50"
+            whileTap={{ scale: 0.92 }}
           >
             <Send className="h-5 w-5" />
-          </button>
+          </motion.button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }

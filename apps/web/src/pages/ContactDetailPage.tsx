@@ -4,6 +4,7 @@ import { api } from "@/lib/api";
 import { ArrowLeft, Phone, Tag, MessageSquare, Trash2, Edit, Plus, X, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
 import clsx from "clsx";
+import { PageTransition, motion, AnimatePresence, dropdownVariants } from "@/components/Motion";
 
 interface TagItem {
   id: string;
@@ -146,6 +147,7 @@ export function ContactDetailPage() {
   const availableTags = allTags.filter((t) => !assignedTagIds.has(t.id));
 
   return (
+    <PageTransition>
     <div className="p-8">
       <div className="mb-6 flex items-center gap-4">
         <Link
@@ -178,11 +180,21 @@ export function ContactDetailPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <motion.div
+        className="grid grid-cols-1 gap-6 lg:grid-cols-3"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
+      >
         {/* Main info */}
         <div className="lg:col-span-2 space-y-6">
           {editing ? (
-            <div className="rounded-xl border border-gray-200 bg-white p-6">
+            <motion.div
+              className="rounded-xl border border-gray-200 bg-white p-6"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.25 }}
+            >
               <h2 className="mb-4 font-semibold text-gray-900">Edit Contact</h2>
               <div className="space-y-4">
                 <div>
@@ -218,7 +230,7 @@ export function ContactDetailPage() {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ) : (
             <>
               {contact.notes && (
@@ -302,8 +314,15 @@ export function ContactDetailPage() {
                 )}
                 <ChevronDown className="h-4 w-4 text-gray-400" />
               </button>
+              <AnimatePresence>
               {showStagePicker && (
-                <div className="absolute left-0 right-0 top-full z-10 mt-1 rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                <motion.div
+                  className="absolute left-0 right-0 top-full z-10 mt-1 rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
+                >
                   <button
                     onClick={() => setStage(null)}
                     className="block w-full px-3 py-2 text-left text-sm text-gray-400 hover:bg-gray-50"
@@ -328,8 +347,9 @@ export function ContactDetailPage() {
                       {stage.name}
                     </button>
                   ))}
-                </div>
+                </motion.div>
               )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -346,8 +366,15 @@ export function ContactDetailPage() {
                 </button>
               )}
             </div>
+            <AnimatePresence>
             {showTagPicker && (
-              <div className="mb-3 rounded-lg border border-gray-200 bg-gray-50 p-2">
+              <motion.div
+                className="mb-3 rounded-lg border border-gray-200 bg-gray-50 p-2"
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+              >
                 <p className="mb-2 text-xs font-medium text-gray-500">Add a tag</p>
                 <div className="flex flex-wrap gap-1.5">
                   {availableTags.map((tag) => (
@@ -365,8 +392,9 @@ export function ContactDetailPage() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
             {contact.tags.length === 0 && !showTagPicker ? (
               <p className="text-sm text-gray-400">No tags</p>
             ) : (
@@ -394,7 +422,8 @@ export function ContactDetailPage() {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
+    </PageTransition>
   );
 }

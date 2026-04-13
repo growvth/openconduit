@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-
+import { motion, AnimatePresence } from "@/components/Motion";
 
 export function LoginPage() {
   const { user, login } = useAuth();
@@ -32,9 +32,21 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm">
+      <motion.div
+        className="w-full max-w-sm"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      >
         <div className="mb-8 text-center">
-          <img src="/logo.svg" alt="OpenConduit" className="mx-auto mb-4 h-12" />
+          <motion.img
+            src="/logo.svg"
+            alt="OpenConduit"
+            className="mx-auto mb-4 h-12"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+          />
           <h1 className="text-2xl font-bold text-gray-900">OpenConduit</h1>
           <p className="mt-1 text-sm text-gray-500">
             Sign in to your account
@@ -42,11 +54,19 @@ export function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
-          )}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div>
             <label
@@ -86,15 +106,16 @@ export function LoginPage() {
             />
           </div>
 
-          <button
+          <motion.button
             type="submit"
             disabled={loading}
             className="w-full rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50"
+            whileTap={{ scale: 0.98 }}
           >
             {loading ? "Signing in..." : "Sign in"}
-          </button>
+          </motion.button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }
