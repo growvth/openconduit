@@ -117,7 +117,8 @@ function Hero() {
         </div>
 
         <h1 className="mx-auto max-w-4xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          Your WhatsApp CRM,{" "}
+          Your WhatsApp CRM,
+          <br />
           <span className="gradient-text">on your server</span>
         </h1>
 
