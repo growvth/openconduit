@@ -615,158 +615,164 @@ function CrmPreview() {
         </div>
 
         {/* CRM Mockup — mirrors real app layout */}
-        <div className="relative mx-auto max-w-5xl mt-12 mb-20">
-          {/* Dashboard Peek Mockup (Tucked behind) */}
-          <div className="hidden lg:block absolute -left-12 -top-10 w-full h-[480px] opacity-40 transition-transform duration-500 hover:-translate-x-4">
-            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
-              <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/50 px-4 py-2.5">
-                <span className="h-2 w-2 rounded-full bg-gray-300" />
-                <span className="h-2 w-2 rounded-full bg-gray-300" />
-                <span className="h-2 w-2 rounded-full bg-gray-300" />
-              </div>
-              <div className="p-6 bg-gray-50/30">
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="h-16 rounded-xl border border-gray-100 bg-white" />
-                  ))}
+        <div className="relative mx-auto max-w-5xl mt-16 mb-24">
+          
+          {/* Dashboard Stats Callout (Top Left, Floating Over) */}
+          <div className="hidden lg:block absolute -left-12 -top-12 w-56 z-20 transition-transform duration-500 hover:-translate-y-2 hover:rotate-0 -rotate-2">
+            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                  <MessageSquare className="h-5 w-5" />
                 </div>
-                <div className="h-40 rounded-xl border border-gray-100 bg-white p-4">
-                  <div className="flex items-end justify-between h-full gap-2">
-                    {[30, 50, 20, 70, 40, 60, 80, 40, 90, 50, 30].map((h, i) => (
-                      <div key={i} className="flex-1 bg-gray-100 rounded-sm" style={{ height: `${h}%` }} />
+                <div>
+                  <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Open Chats</p>
+                  <p className="text-xl font-bold text-gray-900">24</p>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-50 text-green-600">
+                  <Users className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">Total Contacts</p>
+                  <p className="text-xl font-bold text-gray-900">1,284</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main App Window (Z-index 10) */}
+          <div className="relative z-10 overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-2xl shadow-gray-200/50">
+            {/* Browser chrome */}
+            <div className="flex items-center gap-2 border-b border-gray-200 bg-white px-4 py-2.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
+              <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+              <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
+              <span className="ml-2 text-[11px] text-gray-400">openconduit.yourdomain.com</span>
+            </div>
+
+            {/* App layout — matches real h-screen flex */}
+            <div className="flex" style={{ height: "430px" }}>
+              {/* Sidebar — matches Layout.tsx: w-64, border-r, bg-white */}
+              <div className="hidden w-52 flex-shrink-0 flex-col border-r border-gray-200 bg-white sm:flex">
+                {/* Logo bar — matches h-16 border-b px-6 */}
+                <div className="flex h-12 items-center gap-2.5 border-b border-gray-200 px-4">
+                  <img src="/logo.svg" alt="OpenConduit" className="h-5" />
+                  <span className="text-xs font-bold text-gray-900">OpenConduit</span>
+                </div>
+
+                {/* Nav — matches px-3 py-4 space-y-1 */}
+                <nav className="flex-1 space-y-0.5 px-2.5 py-3">
+                  {sidebarItems.map((item) => (
+                    <div
+                      key={item.label}
+                      className={clsx(
+                        "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[11px] font-medium",
+                        item.active
+                          ? "bg-brand-50 text-brand-700"
+                          : "text-gray-600"
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </div>
+                  ))}
+                </nav>
+
+                {/* User section — matches border-t p-4 */}
+                <div className="border-t border-gray-200 px-3 py-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="min-w-0">
+                      <p className="truncate text-[11px] font-medium text-gray-900">Admin User</p>
+                      <p className="truncate text-[9px] text-gray-500">admin@openconduit.dev</p>
+                    </div>
+                    <div className="rounded-md p-1 text-gray-400">
+                      <LogOut className="h-3 w-3" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Main content — matches bg-gray-50 flex-1 overflow-auto */}
+              <div className="flex min-w-0 flex-1 flex-col overflow-hidden bg-gray-50">
+                {/* Chat header — matches ConversationDetailPage header */}
+                <div className="flex items-center gap-3 border-b border-gray-200 bg-white px-4 py-2.5">
+                  <div className="rounded-lg p-1 text-gray-400">
+                    <ArrowLeft className="h-4 w-4" />
+                  </div>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-[11px] font-semibold text-brand-700">S</div>
+                  <div>
+                    <h2 className="text-xs font-semibold text-gray-900">Sarah Chen</h2>
+                    <p className="text-[10px] text-gray-500">+1 (555) 012-3456</p>
+                  </div>
+                  <div className="ml-auto flex items-center gap-2">
+                    <span className="rounded-lg border border-gray-200 px-2 py-1 text-[10px] font-medium text-gray-600">
+                      <User className="mr-0.5 inline h-3 w-3" />
+                      View Contact
+                    </span>
+                  </div>
+                </div>
+
+                {/* Messages — matches ConversationDetailPage message area */}
+                <div className="flex-1 overflow-hidden px-4 py-3">
+                  <div className="mx-auto max-w-lg space-y-2">
+                    {messages.map((msg, i) => (
+                      <div key={i} className={clsx("flex", msg.direction === "OUTBOUND" ? "justify-end" : "justify-start")}>
+                        <div className={clsx(
+                          "max-w-[70%] rounded-2xl px-3 py-1.5",
+                          msg.direction === "OUTBOUND"
+                            ? "bg-brand-500 text-white"
+                            : "border border-gray-200 bg-white text-gray-900"
+                        )}>
+                          <p className="text-[11px] leading-relaxed">{msg.text}</p>
+                          <div className={clsx(
+                            "mt-0.5 flex items-center gap-1 text-[9px]",
+                            msg.direction === "OUTBOUND" ? "text-brand-100" : "text-gray-400"
+                          )}>
+                            <Clock className="h-2 w-2" />
+                            {msg.time}
+                            {msg.direction === "OUTBOUND" && msg.status && (
+                              <span className="ml-0.5 capitalize">{msg.status}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div className="relative z-10 overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-2xl shadow-gray-200/50">
-          {/* Browser chrome */}
-          <div className="flex items-center gap-2 border-b border-gray-200 bg-white px-4 py-2.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
-            <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
-            <span className="h-2.5 w-2.5 rounded-full bg-green-400" />
-            <span className="ml-2 text-[11px] text-gray-400">openconduit.yourdomain.com</span>
-          </div>
-
-          {/* App layout — matches real h-screen flex */}
-          <div className="flex" style={{ height: "430px" }}>
-            {/* Sidebar — matches Layout.tsx: w-64, border-r, bg-white */}
-            <div className="hidden w-52 flex-shrink-0 flex-col border-r border-gray-200 bg-white sm:flex">
-              {/* Logo bar — matches h-16 border-b px-6 */}
-              <div className="flex h-12 items-center gap-2.5 border-b border-gray-200 px-4">
-                <img src="/logo.svg" alt="OpenConduit" className="h-5" />
-                <span className="text-xs font-bold text-gray-900">OpenConduit</span>
-              </div>
-
-              {/* Nav — matches px-3 py-4 space-y-1 */}
-              <nav className="flex-1 space-y-0.5 px-2.5 py-3">
-                {sidebarItems.map((item) => (
-                  <div
-                    key={item.label}
-                    className={clsx(
-                      "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[11px] font-medium",
-                      item.active
-                        ? "bg-brand-50 text-brand-700"
-                        : "text-gray-600"
-                    )}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </div>
-                ))}
-              </nav>
-
-              {/* User section — matches border-t p-4 */}
-              <div className="border-t border-gray-200 px-3 py-2.5">
-                <div className="flex items-center justify-between">
-                  <div className="min-w-0">
-                    <p className="truncate text-[11px] font-medium text-gray-900">Admin User</p>
-                    <p className="truncate text-[9px] text-gray-500">admin@openconduit.dev</p>
-                  </div>
-                  <div className="rounded-md p-1 text-gray-400">
-                    <LogOut className="h-3 w-3" />
+                {/* Input — matches ConversationDetailPage input */}
+                <div className="border-t border-gray-200 bg-white px-4 py-2.5">
+                  <div className="mx-auto flex max-w-lg items-center gap-2">
+                    <div className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-[11px] text-gray-400">
+                      Type a message...
+                    </div>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-500">
+                      <Send className="h-3.5 w-3.5 text-white" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Main content — matches bg-gray-50 flex-1 overflow-auto */}
-            <div className="flex min-w-0 flex-1 flex-col overflow-hidden bg-gray-50">
-              {/* Chat header — matches ConversationDetailPage header */}
-              <div className="flex items-center gap-3 border-b border-gray-200 bg-white px-4 py-2.5">
-                <div className="rounded-lg p-1 text-gray-400">
-                  <ArrowLeft className="h-4 w-4" />
-                </div>
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-[11px] font-semibold text-brand-700">S</div>
-                <div>
-                  <h2 className="text-xs font-semibold text-gray-900">Sarah Chen</h2>
-                  <p className="text-[10px] text-gray-500">+1 (555) 012-3456</p>
-                </div>
-                <div className="ml-auto flex items-center gap-2">
-                  <span className="rounded-lg border border-gray-200 px-2 py-1 text-[10px] font-medium text-gray-600">
-                    <User className="mr-0.5 inline h-3 w-3" />
-                    View Contact
-                  </span>
-                </div>
-              </div>
-
-              {/* Messages — matches ConversationDetailPage message area */}
-              <div className="flex-1 overflow-hidden px-4 py-3">
-                <div className="mx-auto max-w-lg space-y-2">
-                  {messages.map((msg, i) => (
-                    <div key={i} className={clsx("flex", msg.direction === "OUTBOUND" ? "justify-end" : "justify-start")}>
-                      <div className={clsx(
-                        "max-w-[70%] rounded-2xl px-3 py-1.5",
-                        msg.direction === "OUTBOUND"
-                          ? "bg-brand-500 text-white"
-                          : "border border-gray-200 bg-white text-gray-900"
-                      )}>
-                        <p className="text-[11px] leading-relaxed">{msg.text}</p>
-                        <div className={clsx(
-                          "mt-0.5 flex items-center gap-1 text-[9px]",
-                          msg.direction === "OUTBOUND" ? "text-brand-100" : "text-gray-400"
-                        )}>
-                          <Clock className="h-2 w-2" />
-                          {msg.time}
-                          {msg.direction === "OUTBOUND" && msg.status && (
-                            <span className="ml-0.5 capitalize">{msg.status}</span>
-                          )}
-                        </div>
-                      </div>
+          {/* Floating Chart Mockup (Bottom Right, Exploded) */}
+          <div className="hidden sm:block absolute -right-12 -bottom-12 w-80 z-20 transition-transform duration-500 hover:rotate-0 hover:-translate-y-2 rotate-2">
+             <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
+               <div className="p-4 border-b border-gray-100 bg-gray-50/50">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-[11px] font-bold text-gray-900">Engagement Trends</h4>
+                    <TrendingUp className="h-3.5 w-3.5 text-brand-500" />
+                  </div>
+               </div>
+               <div className="p-4 bg-white flex items-end justify-between h-32 gap-1.5">
+                  {[40, 60, 30, 80, 50, 70, 90, 40, 60].map((h, i) => (
+                    <div key={i} className="flex-1 flex flex-col gap-0.5 h-full justify-end">
+                      <div className="w-full bg-brand-500 rounded-sm" style={{ height: `${h}%` }}></div>
+                      <div className="w-full bg-brand-200 rounded-sm" style={{ height: `${h * 0.4}%` }}></div>
                     </div>
                   ))}
-                </div>
-              </div>
-
-              {/* Input — matches ConversationDetailPage input */}
-              <div className="border-t border-gray-200 bg-white px-4 py-2.5">
-                <div className="mx-auto flex max-w-lg items-center gap-2">
-                  <div className="flex-1 rounded-xl border border-gray-300 px-3 py-2 text-[11px] text-gray-400">
-                    Type a message...
-                  </div>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-500">
-                    <Send className="h-3.5 w-3.5 text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-          {/* Floating Chart Mockup (Scattered Layout) */}
-          <div className="hidden sm:block absolute -right-8 -bottom-12 w-80 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-gray-200/40 rotate-2 hover:rotate-0 transition-transform">
-             <div className="p-4 border-b border-gray-100 bg-gray-50/50">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-[11px] font-bold text-gray-900">Message Volume</h4>
-                  <TrendingUp className="h-3.5 w-3.5 text-brand-500" />
-                </div>
-             </div>
-             <div className="p-4 bg-white flex items-end justify-between h-32 gap-1.5">
-                {[40, 60, 30, 80, 50, 70, 90].map((h, i) => (
-                  <div key={i} className="w-full bg-brand-500 rounded-t-sm" style={{ height: `${h}%` }}></div>
-                ))}
+               </div>
              </div>
            </div>
 
