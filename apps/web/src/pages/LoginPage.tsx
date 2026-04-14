@@ -20,11 +20,18 @@ export function LoginPage() {
     setError("");
     setLoading(true);
 
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+
     try {
-      await login(email, password);
+      await login(trimmedEmail, trimmedPassword);
       navigate("/");
-    } catch {
-      setError("Invalid email or password");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Invalid email or password");
+      }
     } finally {
       setLoading(false);
     }
