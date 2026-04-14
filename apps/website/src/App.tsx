@@ -616,9 +616,9 @@ function CrmPreview() {
 
         {/* CRM Mockup — mirrors real app layout */}
         <div className="relative mx-auto max-w-5xl mt-12 mb-20">
-          {/* Mockup 1: Dashboard Peek (Tucked behind slightly, but offset to be visible) */}
-          <div className="hidden lg:block absolute -left-16 -top-8 w-[70%] h-full z-0 transition-transform duration-500 hover:-translate-x-4">
-            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl opacity-40">
+          {/* Dashboard Peek Mockup (Tucked behind) */}
+          <div className="hidden lg:block absolute -left-12 -top-10 w-full h-[480px] opacity-40 transition-transform duration-500 hover:-translate-x-4">
+            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
               <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/50 px-4 py-2.5">
                 <span className="h-2 w-2 rounded-full bg-gray-300" />
                 <span className="h-2 w-2 rounded-full bg-gray-300" />
@@ -630,9 +630,9 @@ function CrmPreview() {
                     <div key={i} className="h-16 rounded-xl border border-gray-100 bg-white" />
                   ))}
                 </div>
-                <div className="h-48 rounded-xl border border-gray-100 bg-white p-4">
+                <div className="h-40 rounded-xl border border-gray-100 bg-white p-4">
                   <div className="flex items-end justify-between h-full gap-2">
-                    {[30, 50, 20, 70, 40, 60, 80, 40, 90].map((h, i) => (
+                    {[30, 50, 20, 70, 40, 60, 80, 40, 90, 50, 30].map((h, i) => (
                       <div key={i} className="flex-1 bg-gray-100 rounded-sm" style={{ height: `${h}%` }} />
                     ))}
                   </div>
@@ -641,10 +641,8 @@ function CrmPreview() {
             </div>
           </div>
 
-          {/* Main App Window (Z-index 10) */}
           <div className="relative z-10 overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-2xl shadow-gray-200/50">
-            {/* Browser chrome */}
-
+          {/* Browser chrome */}
           <div className="flex items-center gap-2 border-b border-gray-200 bg-white px-4 py-2.5">
             <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
             <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
@@ -755,6 +753,7 @@ function CrmPreview() {
               </div>
             </div>
           </div>
+        </div>
 
           {/* Floating Chart Mockup (Scattered Layout) */}
           <div className="hidden sm:block absolute -right-8 -bottom-12 w-80 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-gray-200/40 rotate-2 hover:rotate-0 transition-transform">
