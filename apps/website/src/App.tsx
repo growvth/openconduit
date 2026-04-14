@@ -28,6 +28,7 @@ import {
   LogOut,
   ArrowLeft,
   User,
+  TrendingUp,
 } from "lucide-react";
 import clsx from "clsx";
 import { CodeBlock } from "./components/CodeBlock";
@@ -614,7 +615,8 @@ function CrmPreview() {
         </div>
 
         {/* CRM Mockup — mirrors real app layout */}
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-2xl shadow-gray-200/50">
+        <div className="relative mx-auto max-w-5xl mt-12 mb-20">
+          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-2xl shadow-gray-200/50">
           {/* Browser chrome */}
           <div className="flex items-center gap-2 border-b border-gray-200 bg-white px-4 py-2.5">
             <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
@@ -726,6 +728,22 @@ function CrmPreview() {
               </div>
             </div>
           </div>
+
+          {/* Floating Chart Mockup (Scattered Layout) */}
+          <div className="hidden sm:block absolute -right-8 -bottom-12 w-80 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-gray-200/40 rotate-2 hover:rotate-0 transition-transform">
+             <div className="p-4 border-b border-gray-100 bg-gray-50/50">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-[11px] font-bold text-gray-900">Message Volume</h4>
+                  <TrendingUp className="h-3.5 w-3.5 text-brand-500" />
+                </div>
+             </div>
+             <div className="p-4 bg-white flex items-end justify-between h-32 gap-1.5">
+                {[40, 60, 30, 80, 50, 70, 90].map((h, i) => (
+                  <div key={i} className="w-full bg-brand-500 rounded-t-sm" style={{ height: `${h}%` }}></div>
+                ))}
+             </div>
+           </div>
+
         </div>
       </div>
     </section>
