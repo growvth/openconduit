@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import {
@@ -799,14 +800,17 @@ function LandingPage() {
 
 export function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/docs/quick-start" element={<DocsLayout><QuickStartPage /></DocsLayout>} />
-      <Route path="/docs/api-reference" element={<DocsLayout><ApiReferencePage /></DocsLayout>} />
-      <Route path="/docs/whatsapp-setup" element={<DocsLayout><WhatsAppSetupPage /></DocsLayout>} />
-      <Route path="/docs/webhooks" element={<DocsLayout><WebhooksPage /></DocsLayout>} />
-      <Route path="/docs/security" element={<DocsLayout><SecurityPage /></DocsLayout>} />
-      <Route path="/docs/contributing" element={<DocsLayout><ContributingPage /></DocsLayout>} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/docs/quick-start" element={<DocsLayout><QuickStartPage /></DocsLayout>} />
+        <Route path="/docs/api-reference" element={<DocsLayout><ApiReferencePage /></DocsLayout>} />
+        <Route path="/docs/whatsapp-setup" element={<DocsLayout><WhatsAppSetupPage /></DocsLayout>} />
+        <Route path="/docs/webhooks" element={<DocsLayout><WebhooksPage /></DocsLayout>} />
+        <Route path="/docs/security" element={<DocsLayout><SecurityPage /></DocsLayout>} />
+        <Route path="/docs/contributing" element={<DocsLayout><ContributingPage /></DocsLayout>} />
+      </Routes>
+      <Analytics />
+    </>
   );
 }
